@@ -71,6 +71,8 @@ fun main() {
                 //println("num:$num")
 
                 val digitActual = arrayListOfDigits.indexOf(num)+1
+
+
                 val firstIndexOfStringActual = singleInputString.indexOf(num)
                 val firstIndexOfDigitActual = singleInputString.indexOf(digitActual.toString())
 

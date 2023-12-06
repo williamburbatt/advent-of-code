@@ -83,12 +83,12 @@ fun main() {
     }
 
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("inputFiles/Day02_test")
+    //val testInput = readInput("inputFiles/Day02_test")
     //check(part1(testInput) == 1)
 
-    //val input = readInput("Day01")
-    part2(testInput).println()
-    //part2(input).println()
+    val input = readInput("inputFiles/Day02")
+    //part2(testInput).println()
+    part1(input).println()
 }
 fun handleInvalidGames(games: List<String>, gameNumber: Int){
     val MAX_RED = 12
@@ -96,6 +96,7 @@ fun handleInvalidGames(games: List<String>, gameNumber: Int){
     val MAX_BLUE = 14
 
     for(game in games){
+        println("Checking game: $game")
         val gameSplit = game.trim().split(",")
         gameSplit.println()
         gameSplit.forEach { singleCube ->
@@ -103,18 +104,21 @@ fun handleInvalidGames(games: List<String>, gameNumber: Int){
                 singleCube.contains("red") -> {
                     val redNum = singleCube.replace(" red","").trim()
                     if (redNum.toInt() > MAX_RED){
+                        println("Broke Red")
                         possibleIDList.remove(gameNumber)
                     }
                 }
                 singleCube.contains("green") -> {
                     val greenNum = singleCube.replace(" green","").trim()
                     if (greenNum.toInt() > MAX_GREEN){
+                        println("Broke Green")
                         possibleIDList.remove(gameNumber)
                     }
                 }
                 singleCube.contains("blue") -> {
                     val blueNum = singleCube.replace(" blue","").trim()
                     if (blueNum.toInt() > MAX_BLUE){
+                        println("Broke Blue")
                         possibleIDList.remove(gameNumber)
                     }
                 }
