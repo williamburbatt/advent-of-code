@@ -109,34 +109,49 @@ private fun handleInput2(input: List<String>){
 }
 
 data class ToyBoat(var totalTime: BigInteger, val boatRecord: BigInteger){
-    var maxDistance = BigInteger.ZERO
     val minSpeed = BigInteger.ZERO
     val maxSpeed = totalTime
-
-    var currentSpeed = minSpeed
-
-    var timeTravelled = BigInteger.ZERO
-
-    var distanceTravelled = BigInteger.ZERO
     var countBeaten = BigInteger.ZERO
+
     init{
         findMaxDistance()
     }
     private fun findMaxDistance() {
-        while (currentSpeed < maxSpeed) {
-            currentSpeed++
-            println("currentSpeed: $currentSpeed")
-            timeTravelled = totalTime - currentSpeed
-            println("timeTravelled: $timeTravelled")
-            distanceTravelled = timeTravelled * currentSpeed
-            println("distanceTravelled: $distanceTravelled")
+        //this does whole group
+        //checkSubGroup(minSpeed,maxSpeed)
+        val checkByMillion = (maxSpeed+minSpeed)/BigInteger.valueOf(1000000)
 
-            if (distanceTravelled > maxDistance) {
-                maxDistance = distanceTravelled
-            }
+        println("checkByMillion: $checkByMillion")
+
+        var x = 1
+        repeat(checkByMillion.toInt()) {
+            val currentNumber = BigInteger.valueOf(1000000) * x.toBigInteger()
+            val checkByXMillion = handleSingleTime(currentNumber) > boatRecord
+            checkByXMillion.println()
+            x++
+        }
+
+    }
+    private fun checkSubGroup(startSpeed: BigInteger, endSpeed:BigInteger){
+        var currentSpeed = startSpeed
+        while (currentSpeed < endSpeed) {
+
+            val distanceTravelled = handleSingleTime(currentSpeed)
             if(distanceTravelled > boatRecord){
                 countBeaten++
             }
+            currentSpeed++
         }
     }
+    private fun handleSingleTime(currentSpeed: BigInteger): BigInteger{
+        println("currentSpeed: $currentSpeed")
+        println("totalTime: $totalTime")
+
+        val timeTravelled = totalTime - currentSpeed
+        println("timeTravelled: $timeTravelled")
+        val distanceTravelled = timeTravelled * currentSpeed
+        println("distanceTravelled: $distanceTravelled")
+        return distanceTravelled
+    }
+
 }
