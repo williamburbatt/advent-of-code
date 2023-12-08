@@ -118,12 +118,12 @@ fun main() {
     }
 
     // test if implementation meets criteria from the description, like:
-//    val testInput = readInput("inputFiles/Day05_test")
-//    part1(testInput).println()
+    val testInput = readInput("inputFiles/Day05_test")
+    part1(testInput).println()
 
     val input = readInput("inputFiles/Day05")
-    val result = part1(input)
-        println(result)
+            // val result = part1(input)
+        //println(result)
 //    part2(input).println()
 }
 
@@ -153,9 +153,17 @@ private fun handleSeeds(seeds: String){
     val seedSplit = seeds.split(":")
     val seedsActual = seedSplit[1].trim()
     val seedList = seedsActual.split(" ")
+    var seedNum: BigDecimal? = null
     seedList.forEach { seed ->
-        listOfSeeds.add(ElfSeed(seedNum = seed.toBigDecimal()))
+        if(seedNum == null){
+            seedNum = seed.toBigDecimal()
+        }
+        else{
+            listOfSeeds.add(ElfSeed(seedNum = seedNum!!, seedRange = seed.toBigDecimal()))
+            seedNum =null
+        }
     }
+
 }
 
 private fun handleMap(filterInput: ArrayList<String>){
@@ -270,4 +278,4 @@ private fun findSmallestLocation(): String{
     return smallest.toString()
 }
 
-data class ElfSeed(val seedNum: BigDecimal, var soil : BigDecimal? = null, var fertilizer : BigDecimal? = null, var water : BigDecimal? = null, var light: BigDecimal? = null, var temperature: BigDecimal? = null, var humidity: BigDecimal? = null, var location: BigDecimal? = null)
+data class ElfSeed(val seedNum: BigDecimal, val seedRange:BigDecimal, var soil : BigDecimal? = null, var fertilizer : BigDecimal? = null, var water : BigDecimal? = null, var light: BigDecimal? = null, var temperature: BigDecimal? = null, var humidity: BigDecimal? = null, var location: BigDecimal? = null)

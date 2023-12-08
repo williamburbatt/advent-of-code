@@ -111,26 +111,62 @@ private fun handleInput2(input: List<String>){
 data class ToyBoat(var totalTime: BigInteger, val boatRecord: BigInteger){
     val minSpeed = BigInteger.ZERO
     val maxSpeed = totalTime
+
     var countBeaten = BigInteger.ZERO
 
+
+
+    var lowerBound = BigInteger.ZERO
+    var upperBound = maxSpeed+minSpeed
+    var inRange = false
     init{
         findMaxDistance()
     }
     private fun findMaxDistance() {
         //this does whole group
         //checkSubGroup(minSpeed,maxSpeed)
-        val checkByMillion = (maxSpeed+minSpeed)/BigInteger.valueOf(1000000)
+        checkByNumber(BigInteger.valueOf(1000000))
+        println("lowerBound: $lowerBound")
+        println("upperBound: $upperBound")
+        checkByNumber(BigInteger.valueOf(100000))
+        println("lowerBound: $lowerBound")
+        println("upperBound: $upperBound")
+        checkByNumber(BigInteger.valueOf(10000))
+        println("lowerBound: $lowerBound")
+        println("upperBound: $upperBound")
+        checkByNumber(BigInteger.valueOf(1000))
+        println("lowerBound: $lowerBound")
+        println("upperBound: $upperBound")
+        checkByNumber(BigInteger.valueOf(100))
+        println("lowerBound: $lowerBound")
+        println("upperBound: $upperBound")
+        checkByNumber(BigInteger.valueOf(10))
+        println("lowerBound: $lowerBound")
+        println("upperBound: $upperBound")
+        checkByNumber(BigInteger.valueOf(1))
+        println("lowerBound: $lowerBound")
+        println("upperBound: $upperBound")
 
-        println("checkByMillion: $checkByMillion")
-
+    }
+    private fun checkByNumber(checkBy: BigInteger){
+        val repeatNum = ((upperBound-lowerBound) / checkBy)
+        println("Checking every $checkBy spots")
         var x = 1
-        repeat(checkByMillion.toInt()) {
-            val currentNumber = BigInteger.valueOf(1000000) * x.toBigInteger()
+        repeat(repeatNum.toInt()) {
+            val currentNumber = checkBy * x.toBigInteger()
             val checkByXMillion = handleSingleTime(currentNumber) > boatRecord
-            checkByXMillion.println()
+            if(checkByXMillion){
+                inRange = true
+                lowerBound = currentNumber- checkBy
+            }
+            else{
+                if(inRange) {
+                    inRange = false
+                    upperBound = currentNumber
+                }
+            }
             x++
         }
-
     }
     private fun checkSubGroup(startSpeed: BigInteger, endSpeed:BigInteger){
         var currentSpeed = startSpeed
@@ -144,13 +180,8 @@ data class ToyBoat(var totalTime: BigInteger, val boatRecord: BigInteger){
         }
     }
     private fun handleSingleTime(currentSpeed: BigInteger): BigInteger{
-        println("currentSpeed: $currentSpeed")
-        println("totalTime: $totalTime")
-
         val timeTravelled = totalTime - currentSpeed
-        println("timeTravelled: $timeTravelled")
         val distanceTravelled = timeTravelled * currentSpeed
-        println("distanceTravelled: $distanceTravelled")
         return distanceTravelled
     }
 
